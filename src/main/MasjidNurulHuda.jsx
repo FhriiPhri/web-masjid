@@ -17,6 +17,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import masjidImage from "../assets/foto-malam.jpeg";
+import tampakDepan from "../assets/tampak-depan.jpg";
 
 const cities = [
   { id: "1301", name: "Jakarta" },
@@ -140,7 +141,7 @@ const MasjidNurulHuda = () => {
       excerpt:
         "Ketika kita berbicara tentang keagamaan, seringkali kita terfokus pada ritual-ritual ibadah.",
       image:
-        "https://images.unsplash.com/photo-1584552023990-f6723f5e6925?w=400",
+        "https://cdn.prod.website-files.com/65af5f0812c914d3fef6a68c/65f27c26e1af10be0127caf2_5.%20Menggali%20Kearifan%20Spiritual%20dalam%20Petunjuk%20Al-Quran.jpg",
     },
   ];
 
@@ -148,8 +149,7 @@ const MasjidNurulHuda = () => {
     {
       judul: "Suasana Masjid",
       tanggal: "Jum'at, 02 Januari 2026",
-      image:
-        "https://images.unsplash.com/photo-1564769610726-4bbdd02b3afe?w=400",
+      image: tampakDepan,
     },
     {
       judul: "Shalat Idul Fitri 2023",
@@ -451,7 +451,7 @@ const MasjidNurulHuda = () => {
                 <div className="bg-gray-900 rounded-lg aspect-video overflow-hidden">
                   <iframe
                     className="w-full h-full"
-                    src="https://www.youtube.com/embed/live_stream?channel=UC2gcngAv_uCmmAwLYEu6hiw"
+                    src="https://youtube.com/embed/voc5Yp1QT8Q?feature=share"
                     title="Tausiyah Terbaru"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
