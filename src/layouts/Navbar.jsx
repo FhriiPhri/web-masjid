@@ -29,13 +29,25 @@ const Navbar = ({ scrollToSection }) => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center text-sm">
             <div className="flex gap-3">
-              <a href="#" className="hover:text-emerald-200 transition">
+              <a
+                href="https://www.facebook.com/profile.php?id=61581768106162"
+                target="_blank"
+                className="hover:text-emerald-200 transition"
+              >
                 <Facebook size={16} />
               </a>
-              <a href="#" className="hover:text-emerald-200 transition">
+              <a
+                href="https://www.instagram.com/risma_nurulhuda14/"
+                target="_blank"
+                className="hover:text-emerald-200 transition"
+              >
                 <Instagram size={16} />
               </a>
-              <a href="#" className="hover:text-emerald-200 transition">
+              <a
+                href="https://www.youtube.com/@MasjidNurulHudaDepok"
+                target="_blank"
+                className="hover:text-emerald-200 transition"
+              >
                 <Youtube size={16} />
               </a>
             </div>
@@ -64,7 +76,7 @@ const Navbar = ({ scrollToSection }) => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center h-16">
             <a
-              href="#"
+              href="/"
               className="text-xl font-bold text-gray-800 hover:text-emerald-600 transition"
             >
               Masjid Nurul Huda

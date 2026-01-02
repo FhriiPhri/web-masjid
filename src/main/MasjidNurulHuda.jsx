@@ -39,6 +39,7 @@ const MasjidNurulHuda = () => {
   const [showCityDropdown, setShowCityDropdown] = useState(false);
   const [error, setError] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [nextSholatInfo, setNextSholatInfo] = useState(null);
 
   const heroSlides = [
     {
@@ -51,6 +52,29 @@ const MasjidNurulHuda = () => {
 
   useEffect(() => {
     fetchPrayerTimes();
+  }, [selectedCity]);
+
+  // Update current time setiap detik
+  useEffect(() => {
+    const timeInterval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timeInterval);
+  }, []);
+
+  // Update countdown info setiap detik
+  useEffect(() => {
+    if (jadwalSholat.length > 0) {
+      setNextSholatInfo(getNextSholat());
+    }
+  }, [currentTime, jadwalSholat]);
+
+  // Auto refresh jadwal sholat setiap 60 detik
+  useEffect(() => {
+    const refreshInterval = setInterval(() => {
+      fetchPrayerTimes();
+    }, 60000); // 60 detik
+    return () => clearInterval(refreshInterval);
   }, [selectedCity]);
 
   useEffect(() => {
@@ -174,7 +198,7 @@ const MasjidNurulHuda = () => {
     }
   };
 
-  // Fungsi untuk menghitung menit menuju sholat berikutnya
+  // Fungsi untuk menghitung waktu menuju sholat berikutnya
   const getNextSholat = () => {
     if (!jadwalSholat || jadwalSholat.length === 0) return null;
 
@@ -186,12 +210,24 @@ const MasjidNurulHuda = () => {
         now.getMonth(),
         now.getDate(),
         hour,
-        minute
+        minute,
+        0
       );
 
       if (sholatTime > now) {
-        const diffMinutes = Math.ceil((sholatTime - now) / 60000); // selisih menit
-        return { ...sholat, minutesLeft: diffMinutes };
+        const diffMs = sholatTime - now;
+        const diffSeconds = Math.floor(diffMs / 1000);
+        const hours = Math.floor(diffSeconds / 3600);
+        const minutes = Math.floor((diffSeconds % 3600) / 60);
+        const seconds = diffSeconds % 60;
+
+        return {
+          ...sholat,
+          hours,
+          minutes,
+          seconds,
+          totalSeconds: diffSeconds,
+        };
       }
     }
 
@@ -203,10 +239,22 @@ const MasjidNurulHuda = () => {
       now.getMonth(),
       now.getDate() + 1,
       hour,
-      minute
+      minute,
+      0
     );
-    const diffMinutes = Math.ceil((sholatTime - now) / 60000);
-    return { ...firstSholat, minutesLeft: diffMinutes };
+    const diffMs = sholatTime - now;
+    const diffSeconds = Math.floor(diffMs / 1000);
+    const hours = Math.floor(diffSeconds / 3600);
+    const minutes = Math.floor((diffSeconds % 3600) / 60);
+    const seconds = diffSeconds % 60;
+
+    return {
+      ...firstSholat,
+      hours,
+      minutes,
+      seconds,
+      totalSeconds: diffSeconds,
+    };
   };
 
   return (
@@ -340,16 +388,22 @@ const MasjidNurulHuda = () => {
                       </button>
                     </div>
                   </div>
-                  {!loading && jadwalSholat.length > 0 && (
+                  {!loading && jadwalSholat.length > 0 && nextSholatInfo && (
                     <p className="text-white text-sm mt-1">
                       {(() => {
-                        const next = getNextSholat();
-                        if (!next) return "";
-                        const hours = Math.floor(next.minutesLeft / 60);
-                        const minutes = next.minutesLeft % 60;
-                        return `Menuju ${next.nama} ${
-                          hours > 0 ? hours + " jam " : ""
-                        }${minutes} menit lagi`;
+                        const { nama, hours, minutes, seconds } =
+                          nextSholatInfo;
+                        let timeString = `Menuju ${nama} `;
+
+                        if (hours > 0) {
+                          timeString += `${hours} jam `;
+                        }
+                        if (minutes > 0 || hours > 0) {
+                          timeString += `${minutes} menit `;
+                        }
+                        timeString += `${seconds} detik lagi`;
+
+                        return timeString;
                       })()}
                     </p>
                   )}
@@ -540,9 +594,9 @@ const MasjidNurulHuda = () => {
                     <div>
                       <h4 className="font-bold text-gray-900 mb-2">Alamat</h4>
                       <p className="text-gray-600">
-                        ABADIJAYA, SUKMAJAYA
+                        Jalan Cisokan Raya, RW 014, Abadijaya, Sukmajaya
                         <br />
-                        KOTA DEPOK, JAWA BARAT
+                        Kota Depok, Jawa Barat, 16417
                       </p>
                     </div>
                   </div>
@@ -552,7 +606,7 @@ const MasjidNurulHuda = () => {
                     </div>
                     <div>
                       <h4 className="font-bold text-gray-900 mb-2">Telepon</h4>
-                      <p className="text-gray-600">+62 21 1234 5678</p>
+                      <p className="text-gray-600">+62 818-0886-1551</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
@@ -562,7 +616,7 @@ const MasjidNurulHuda = () => {
                     <div>
                       <h4 className="font-bold text-gray-900 mb-2">Email</h4>
                       <p className="text-gray-600">
-                        info@masjidnurulhuda.or.id
+                        masjidnurulhudadepok14@gmail.com
                       </p>
                     </div>
                   </div>
@@ -655,19 +709,22 @@ const MasjidNurulHuda = () => {
                 <h5 className="font-bold mb-4">Ikuti Kami</h5>
                 <div className="flex gap-4">
                   <a
-                    href="#"
+                    href="https://www.facebook.com/profile.php?id=61581768106162"
+                    target="_blank"
                     className="text-gray-400 hover:text-white transition"
                   >
                     <Facebook size={20} />
                   </a>
                   <a
-                    href="#"
+                    href="https://www.instagram.com/risma_nurulhuda14/"
+                    target="_blank"
                     className="text-gray-400 hover:text-white transition"
                   >
                     <Instagram size={20} />
                   </a>
                   <a
-                    href="#"
+                    href="https://www.youtube.com/@MasjidNurulHudaDepok"
+                    target="_blank"
                     className="text-gray-400 hover:text-white transition"
                   >
                     <Youtube size={20} />
