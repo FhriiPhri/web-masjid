@@ -173,6 +173,41 @@ const MasjidNurulHuda = () => {
     }
   };
 
+  // Fungsi untuk menghitung menit menuju sholat berikutnya
+  const getNextSholat = () => {
+    if (!jadwalSholat || jadwalSholat.length === 0) return null;
+
+    const now = new Date();
+    for (let sholat of jadwalSholat) {
+      const [hour, minute] = sholat.waktu.split(":").map(Number);
+      const sholatTime = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        hour,
+        minute
+      );
+
+      if (sholatTime > now) {
+        const diffMinutes = Math.ceil((sholatTime - now) / 60000); // selisih menit
+        return { ...sholat, minutesLeft: diffMinutes };
+      }
+    }
+
+    // Kalau semua waktu sholat sudah lewat hari ini, kembalikan sholat pertama besok
+    const firstSholat = jadwalSholat[0];
+    const [hour, minute] = firstSholat.waktu.split(":").map(Number);
+    const sholatTime = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1,
+      hour,
+      minute
+    );
+    const diffMinutes = Math.ceil((sholatTime - now) / 60000);
+    return { ...firstSholat, minutesLeft: diffMinutes };
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Top Bar */}
@@ -430,6 +465,19 @@ const MasjidNurulHuda = () => {
                     </button>
                   </div>
                 </div>
+                {!loading && jadwalSholat.length > 0 && (
+                  <p className="text-white text-sm mt-1">
+                    {(() => {
+                      const next = getNextSholat();
+                      if (!next) return "";
+                      const hours = Math.floor(next.minutesLeft / 60);
+                      const minutes = next.minutesLeft % 60;
+                      return `Menuju ${next.nama} ${
+                        hours > 0 ? hours + " jam " : ""
+                      }${minutes} menit lagi`;
+                    })()}
+                  </p>
+                )}
               </div>
 
               <div className="p-8">
@@ -523,8 +571,15 @@ const MasjidNurulHuda = () => {
               <h3 className="text-3xl font-bold text-white mb-6">
                 Tausiyah Terbaru
               </h3>
-              <div className="bg-gray-900 rounded-lg aspect-video flex items-center justify-center hover:bg-gray-800 transition cursor-pointer">
-                <Youtube size={64} className="text-white" />
+              <div className="bg-gray-900 rounded-lg aspect-video overflow-hidden">
+                <iframe
+                  className="w-full h-full"
+                  src="https://www.youtube.com/embed/live_stream?channel=UC2gcngAv_uCmmAwLYEu6hiw"
+                  title="Tausiyah Terbaru"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
               </div>
             </div>
             <div>
