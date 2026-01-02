@@ -35,7 +35,7 @@ const MasjidNurulHuda = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [jadwalSholat, setJadwalSholat] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCity, setSelectedCity] = useState(cities[1]);
+  const [selectedCity, setSelectedCity] = useState(cities[2]);
   const [showCityDropdown, setShowCityDropdown] = useState(false);
   const [error, setError] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -118,11 +118,11 @@ const MasjidNurulHuda = () => {
         const jadwal = data.data.jadwal;
 
         setJadwalSholat([
-          { nama: "Subuh", waktu: jadwal.subuh, icon: "🌅" },
-          { nama: "Dzuhur", waktu: jadwal.dzuhur, icon: "☀️" },
-          { nama: "Ashar", waktu: jadwal.ashar, icon: "🌤️" },
-          { nama: "Maghrib", waktu: jadwal.maghrib, icon: "🌆" },
-          { nama: "Isya", waktu: jadwal.isya, icon: "🌙" },
+          { nama: "Subuh", waktu: jadwal.subuh },
+          { nama: "Dzuhur", waktu: jadwal.dzuhur },
+          { nama: "Ashar", waktu: jadwal.ashar },
+          { nama: "Maghrib", waktu: jadwal.maghrib },
+          { nama: "Isya", waktu: jadwal.isya },
         ]);
       } else {
         throw new Error("Format data tidak sesuai");
@@ -132,11 +132,11 @@ const MasjidNurulHuda = () => {
       setError("Gagal memuat jadwal sholat. Silakan coba lagi.");
 
       setJadwalSholat([
-        { nama: "Subuh", waktu: "04:30", icon: "🌅" },
-        { nama: "Dzuhur", waktu: "12:00", icon: "☀️" },
-        { nama: "Ashar", waktu: "15:15", icon: "🌤️" },
-        { nama: "Maghrib", waktu: "18:00", icon: "🌆" },
-        { nama: "Isya", waktu: "19:15", icon: "🌙" },
+        { nama: "Subuh", waktu: "04:30" },
+        { nama: "Dzuhur", waktu: "12:00" },
+        { nama: "Ashar", waktu: "15:15" },
+        { nama: "Maghrib", waktu: "18:00" },
+        { nama: "Isya", waktu: "19:15" },
       ]);
     } finally {
       setLoading(false);
@@ -427,8 +427,7 @@ const MasjidNurulHuda = () => {
                             key={idx}
                             className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-6 text-center hover:shadow-lg transition-all hover:scale-105 border border-emerald-100"
                           >
-                            <div className="text-3xl mb-2">{sholat.icon}</div>
-                            <div className="text-sm font-semibold text-gray-600 mb-2">
+                            <div className="text-2xl font-semibold text-gray-600 mb-2">
                               {sholat.nama}
                             </div>
                             <div className="text-2xl font-bold text-emerald-600">
