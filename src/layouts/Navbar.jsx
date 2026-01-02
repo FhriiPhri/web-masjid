@@ -8,7 +8,9 @@ import {
   Youtube,
   Send,
   Mail,
+  MessageCircle,
 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 const Navbar = ({ scrollToSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -53,14 +55,16 @@ const Navbar = ({ scrollToSection }) => {
             </div>
             <div className="flex gap-4">
               <a
-                href="#"
+                href="https://wa.me/6281210672183"
+                target="_blank"
                 className="hover:text-emerald-200 flex items-center gap-1 transition"
               >
-                <Send size={16} />
+                <FaWhatsapp size={16} />
                 <span className="hidden md:inline">WhatsApp</span>
               </a>
               <a
-                href="#"
+                href="mailto:masjidnurulhudadepok14@gmail.com"
+                target="_blank"
                 className="hover:text-emerald-200 flex items-center gap-1 transition"
               >
                 <Mail size={16} />
