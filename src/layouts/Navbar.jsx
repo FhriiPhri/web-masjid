@@ -11,6 +11,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
+import logo from "../assets/logo.png";
 
 const Navbar = ({ scrollToSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -81,8 +82,13 @@ const Navbar = ({ scrollToSection }) => {
           <div className="flex justify-between items-center h-16">
             <a
               href="/"
-              className="text-xl font-bold text-gray-800 hover:text-emerald-600 transition"
+              className="flex items-center gap-2 text-xl font-bold text-gray-800 hover:text-emerald-600 transition"
             >
+              <img
+                src={logo}
+                alt="Masjid Nurul Huda Logo"
+                className="h-12 w-12 object-contain"
+              />
               Masjid Nurul Huda
             </a>
 
