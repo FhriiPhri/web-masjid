@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../layouts/Layout";
 import { ChevronLeft, ChevronRight, X as CloseIcon } from "lucide-react";
 import tampakDepan from "../assets/tampak-depan.jpg";
@@ -20,12 +20,24 @@ import teras2 from "../assets/teras2.jpg";
 const GalleryPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeCategory, setActiveCategory] = useState("semua");
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const galleryCategories = [
     { id: "semua", name: "Semua Foto" },
-    { id: "eksterior", name: "Eksterior Masjid" },
+    { id: "eksterior", name: "Eksterior" },
     { id: "interior", name: "Interior" },
-    { id: "gedung", name: "Gedung Pendukung" },
+    { id: "gedung", name: "Gedung" },
     { id: "fasilitas", name: "Fasilitas" },
   ];
 
@@ -80,13 +92,13 @@ const GalleryPage = () => {
     },
     {
       id: 9,
-      title: "Tempat Wudhu",
+      title: "Tempat Wudhu Depan",
       category: "fasilitas",
       image: tempatWudhuDepan1,
     },
     {
       id: 10,
-      title: "Tempat Wudhu",
+      title: "Tempat Wudhu Depan",
       category: "fasilitas",
       image: tempatWudhuDepan2,
     },
@@ -155,17 +167,31 @@ const GalleryPage = () => {
     setSelectedImage(filteredImages[newIndex]);
   };
 
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!selectedImage) return;
+
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight") navigateImage("next");
+      if (e.key === "ArrowLeft") navigateImage("prev");
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedImage]);
+
   return (
     <Layout>
       <div className="min-h-screen bg-gray-50">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-emerald-600 via-emerald-500 to-teal-600 py-12 md:py-16">
-          <div className="container mx-auto px-4 relative">
-            <div className="max-w-4xl mx-auto text-center text-white">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+        <section className="relative bg-gradient-to-br from-emerald-600 via-emerald-500 to-teal-600 py-8 md:py-12 lg:py-16">
+          <div className="container mx-auto px-3 sm:px-4 relative">
+            <div className="max-w-4xl mx-auto text-center text-white pt-4">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
                 Galeri Foto
               </h1>
-              <p className="text-lg md:text-xl text-emerald-100">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-emerald-100">
                 Koleksi foto Masjid Nurul Huda Depok
               </p>
             </div>
@@ -174,20 +200,20 @@ const GalleryPage = () => {
 
         {/* Category Filter */}
         <section className="sticky top-0 z-30 bg-white border-b shadow-sm">
-          <div className="container mx-auto px-4">
-            <div className="flex overflow-x-auto py-4 gap-2">
+          <div className="container mx-auto px-3 sm:px-4">
+            <div className="flex overflow-x-auto py-3 sm:py-4 gap-2 sm:gap-3 no-scrollbar">
               {galleryCategories.map((category) => (
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
-                  className={`px-4 py-2 rounded-full whitespace-nowrap transition-all ${
+                  className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full whitespace-nowrap text-xs sm:text-sm transition-all flex-shrink-0 ${
                     activeCategory === category.id
-                      ? "bg-emerald-600 text-white"
+                      ? "bg-emerald-600 text-white font-semibold"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                 >
                   {category.name}
-                  <span className="ml-2 text-xs opacity-80">
+                  <span className="ml-1 sm:ml-2 text-xs opacity-80">
                     (
                     {category.id === "semua"
                       ? galleryImages.length
@@ -203,21 +229,21 @@ const GalleryPage = () => {
         </section>
 
         {/* Gallery Grid */}
-        <section className="py-8 md:py-12 bg-gray-50">
-          <div className="container mx-auto px-4">
+        <section className="py-6 sm:py-8 md:py-10 lg:py-12 bg-gray-50">
+          <div className="container mx-auto px-3 sm:px-4">
             {filteredImages.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="text-5xl mb-4">📷</div>
-                <p className="text-gray-600">
+              <div className="text-center py-10 sm:py-12">
+                <div className="text-4xl sm:text-5xl mb-4">📷</div>
+                <p className="text-gray-600 text-sm sm:text-base">
                   Tidak ada foto dalam kategori ini
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
                 {filteredImages.map((image) => (
                   <div
                     key={image.id}
-                    className="group relative overflow-hidden rounded-lg bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
+                    className="group relative overflow-hidden rounded-lg sm:rounded-xl bg-white shadow-sm hover:shadow-lg md:hover:shadow-xl transition-all duration-300 cursor-pointer"
                     onClick={() => openLightbox(image)}
                   >
                     <div className="aspect-[4/3] overflow-hidden">
@@ -225,16 +251,20 @@ const GalleryPage = () => {
                         src={image.image}
                         alt={image.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
                       />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                      <p className="text-white text-sm font-medium">
+
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3 sm:p-4">
+                      <p className="text-white text-xs sm:text-sm font-medium truncate">
                         {image.title}
                       </p>
                     </div>
-                    <div className="absolute top-3 left-3">
-                      <span className="bg-black/60 text-white text-xs px-2 py-1 rounded">
+
+                    {/* Category badge */}
+                    <div className="absolute top-2 left-2">
+                      <span className="bg-black/70 text-white text-xs px-2 py-1 rounded">
                         {image.category === "eksterior" && "Eksterior"}
                         {image.category === "interior" && "Interior"}
                         {image.category === "gedung" && "Gedung"}
@@ -247,76 +277,88 @@ const GalleryPage = () => {
             )}
 
             {/* Info */}
-            <div className="mt-12 text-center">
-              <p className="text-gray-600 text-sm">
+            <div className="mt-8 sm:mt-10 md:mt-12 text-center">
+              <p className="text-gray-600 text-xs sm:text-sm">
                 {filteredImages.length} foto • Klik foto untuk melihat detail
+                {!isMobile && " • Gunakan tombol panah untuk navigasi"}
               </p>
             </div>
           </div>
         </section>
 
-        {/* Simple Lightbox - FIXED */}
+        {/* Lightbox Modal */}
         {selectedImage && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4"
             onClick={closeLightbox}
           >
-            {/* Background */}
+            {/* Background overlay */}
             <div className="absolute inset-0 bg-black/90"></div>
 
-            {/* Close button */}
+            {/* Close button - Mobile: bottom center, Desktop: top right */}
             <button
               onClick={closeLightbox}
-              className="absolute top-6 right-6 text-white hover:text-emerald-300 transition z-10"
+              className="absolute sm:top-6 sm:right-6 bottom-4 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto bg-black/50 hover:bg-black/70 text-white rounded-full p-2 sm:p-0 sm:bg-transparent sm:hover:text-emerald-300 transition z-10"
             >
-              <CloseIcon size={32} />
+              {isMobile ? (
+                <span className="flex items-center gap-1 text-sm">
+                  <CloseIcon size={16} />
+                  Tutup
+                </span>
+              ) : (
+                <CloseIcon size={32} />
+              )}
             </button>
 
-            {/* Navigation buttons */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                navigateImage("prev");
-              }}
-              className="absolute left-6 top-1/2 -translate-y-1/2 text-white hover:text-emerald-300 transition z-10"
-            >
-              <ChevronLeft size={40} />
-            </button>
+            {/* Navigation buttons - Hidden on mobile */}
+            {!isMobile && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigateImage("prev");
+                  }}
+                  className="absolute left-6 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 hover:text-emerald-300 transition z-10"
+                >
+                  <ChevronLeft size={32} />
+                </button>
 
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                navigateImage("next");
-              }}
-              className="absolute right-6 top-1/2 -translate-y-1/2 text-white hover:text-emerald-300 transition z-10"
-            >
-              <ChevronRight size={40} />
-            </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigateImage("next");
+                  }}
+                  className="absolute right-6 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 hover:text-emerald-300 transition z-10"
+                >
+                  <ChevronRight size={32} />
+                </button>
+              </>
+            )}
 
             {/* Image Container */}
             <div
-              className="relative max-w-5xl w-full h-full flex flex-col justify-center"
+              className="relative max-w-4xl lg:max-w-5xl w-full h-full flex flex-col justify-center"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Image */}
-              <div className="flex-1 flex items-center justify-center">
+              <div className="flex-1 flex items-center justify-center p-2">
                 <img
                   src={selectedImage.image}
                   alt={selectedImage.title}
-                  className="max-w-full max-h-[70vh] object-contain rounded-lg"
+                  className="max-w-full max-h-[60vh] sm:max-h-[70vh] object-contain rounded-lg"
                 />
               </div>
 
-              {/* Image info - FIXED POSITION */}
-              <div className="mt-6 w-full">
-                <div className="bg-black/50 backdrop-blur-sm rounded-lg p-4 max-w-2xl mx-auto">
-                  <div className="flex justify-between items-start">
+              {/* Image info */}
+              <div className="mt-4 sm:mt-6 w-full px-2 sm:px-0">
+                <div className="bg-black/50 backdrop-blur-sm rounded-lg p-3 sm:p-4 max-w-2xl mx-auto">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
                     <div className="flex-1">
-                      <h3 className="text-white text-lg font-semibold mb-1">
+                      <h3 className="text-white text-sm sm:text-base md:text-lg font-semibold mb-1 truncate">
                         {selectedImage.title}
                       </h3>
-                      <div className="flex items-center gap-4">
-                        <span className="text-emerald-300 text-sm">
+                      <div className="flex items-center gap-3 sm:gap-4">
+                        <span className="text-emerald-300 text-xs sm:text-sm">
                           {selectedImage.category === "eksterior" &&
                             "Eksterior Masjid"}
                           {selectedImage.category === "interior" && "Interior"}
@@ -325,7 +367,7 @@ const GalleryPage = () => {
                           {selectedImage.category === "fasilitas" &&
                             "Fasilitas"}
                         </span>
-                        <span className="text-gray-300 text-sm">
+                        <span className="text-gray-300 text-xs sm:text-sm">
                           {filteredImages.findIndex(
                             (img) => img.id === selectedImage.id
                           ) + 1}
@@ -333,6 +375,30 @@ const GalleryPage = () => {
                         </span>
                       </div>
                     </div>
+
+                    {/* Mobile navigation */}
+                    {isMobile && (
+                      <div className="flex justify-center gap-4 pt-2 border-t border-gray-600/50 sm:hidden">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigateImage("prev");
+                          }}
+                          className="bg-black/50 hover:bg-black/70 text-white rounded-full p-2"
+                        >
+                          <ChevronLeft size={20} />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigateImage("next");
+                          }}
+                          className="bg-black/50 hover:bg-black/70 text-white rounded-full p-2"
+                        >
+                          <ChevronRight size={20} />
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -340,6 +406,22 @@ const GalleryPage = () => {
           </div>
         )}
       </div>
+
+      <style jsx>{`
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+
+        @media (min-width: 375px) {
+          .xs\\:grid-cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+      `}</style>
     </Layout>
   );
 };
