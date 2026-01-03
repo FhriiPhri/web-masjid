@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Layout from "../layouts/Layout";
 import { ChevronLeft, ChevronRight, X as CloseIcon } from "lucide-react";
 import tampakDepan from "../assets/tampak-depan.jpg";
+import tampakDepanMalam from "../assets/foto-malam.jpeg";
 import tampakKiri from "../assets/tampak-kiri.jpg";
 import tampakSudutKiri from "../assets/tampak-sudut-kiri.jpg";
 import tampakSudutKanan from "../assets/tampak-sudut-kanan.jpg";
@@ -9,6 +10,12 @@ import gedungGs from "../assets/gedung-gs.jpg";
 import gedungTpa from "../assets/gedung-tpa.jpg";
 import tempatWudhu from "../assets/tempat-wudhu.jpg";
 import interior1 from "../assets/interior1.jpg";
+import interior2 from "../assets/interior2.jpg";
+import interior3 from "../assets/interior3.jpg";
+import tempatWudhuDepan1 from "../assets/tempat-wudhu-depan1.jpg";
+import tempatWudhuDepan2 from "../assets/tempat-wudhu-depan2.jpg";
+import teras1 from "../assets/teras1.jpg";
+import teras2 from "../assets/teras2.jpg";
 
 const GalleryPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -31,45 +38,87 @@ const GalleryPage = () => {
     },
     {
       id: 2,
+      title: "Tampak Depan Masjid (Malam)",
+      category: "eksterior",
+      image: tampakDepanMalam,
+    },
+    {
+      id: 3,
       title: "Tampak Samping Kiri",
       category: "eksterior",
       image: tampakKiri,
     },
     {
-      id: 3,
+      id: 4,
       title: "Tampak Sudut Kiri",
       category: "eksterior",
       image: tampakSudutKiri,
     },
     {
-      id: 4,
+      id: 5,
       title: "Tampak Sudut Kanan",
       category: "eksterior",
       image: tampakSudutKanan,
     },
     {
-      id: 5,
+      id: 6,
       title: "Gedung Serbaguna",
       category: "gedung",
       image: gedungGs,
     },
     {
-      id: 6,
+      id: 7,
       title: "Gedung TPA",
       category: "gedung",
       image: gedungTpa,
     },
     {
-      id: 7,
+      id: 8,
       title: "Tempat Wudhu",
       category: "fasilitas",
       image: tempatWudhu,
     },
     {
-      id: 8,
+      id: 9,
+      title: "Tempat Wudhu",
+      category: "fasilitas",
+      image: tempatWudhuDepan1,
+    },
+    {
+      id: 10,
+      title: "Tempat Wudhu",
+      category: "fasilitas",
+      image: tempatWudhuDepan2,
+    },
+    {
+      id: 11,
       title: "Interior Utama",
       category: "interior",
       image: interior1,
+    },
+    {
+      id: 12,
+      title: "Interior Utama",
+      category: "interior",
+      image: interior2,
+    },
+    {
+      id: 13,
+      title: "Interior Utama",
+      category: "interior",
+      image: interior3,
+    },
+    {
+      id: 14,
+      title: "Teras Masjid",
+      category: "eksterior",
+      image: teras1,
+    },
+    {
+      id: 15,
+      title: "Teras Masjid",
+      category: "eksterior",
+      image: teras2,
     },
   ];
 
