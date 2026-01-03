@@ -21,7 +21,7 @@ const Navbar = ({ scrollToSection }) => {
     { name: "beranda", type: "route", path: "/" },
     { name: "kajian", type: "route", path: "/kajian" },
     { name: "galeri", type: "route", path: "/gallery" },
-    { name: "pengurus", type: "scroll" },
+    { name: "pengurus", type: "route", path: "/pengurus" },
     { name: "kontak", type: "scroll" },
   ];
 
