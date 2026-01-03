@@ -263,7 +263,7 @@ const MasjidNurulHuda = () => {
         {/* Hero Section with Image Slider */}
         <section
           id="beranda"
-          className="relative h-[500px] md:h-[600px] overflow-hidden"
+          className="relative h-[400px] sm:h-[450px] md:h-[500px] lg:h-[600px] overflow-hidden"
         >
           {heroSlides.map((slide, index) => (
             <div
@@ -273,59 +273,68 @@ const MasjidNurulHuda = () => {
               }`}
             >
               <div
-                className="absolute inset-0 bg-cover"
+                className="absolute inset-0 bg-cover bg-center"
                 style={{
                   backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${slide.image})`,
-                  backgroundPosition: slide.position || "center",
                 }}
               />
               <div className="absolute inset-0 flex items-center justify-center px-4">
                 <div className="text-center text-white max-w-4xl">
-                  <h1 className="text-3xl md:text-5xl font-bold mb-4 uppercase">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 leading-tight">
                     {slide.title}
                   </h1>
-                  <p className="text-lg md:text-xl">{slide.subtitle}</p>
+                  <p className="text-sm sm:text-base md:text-lg lg:text-xl">
+                    {slide.subtitle}
+                  </p>
                 </div>
               </div>
             </div>
           ))}
 
+          {/* Navigation Buttons - Hidden on mobile, shown on tablet+ */}
           <button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 backdrop-blur-sm text-white p-3 rounded-full transition z-10"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full transition z-10 hidden sm:block"
+            aria-label="Slide sebelumnya"
           >
-            <ChevronLeft size={24} />
+            <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 backdrop-blur-sm text-white p-3 rounded-full transition z-10"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 backdrop-blur-sm text-white p-2 sm:p-3 rounded-full transition z-10 hidden sm:block"
+            aria-label="Slide berikutnya"
           >
-            <ChevronRight size={24} />
+            <ChevronRight size={20} className="sm:w-6 sm:h-6" />
           </button>
 
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+          {/* Slide Indicators */}
+          <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
             {heroSlides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full transition ${
-                  index === currentSlide ? "bg-white w-8" : "bg-white/50"
+                className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition ${
+                  index === currentSlide ? "bg-white w-4 sm:w-8" : "bg-white/50"
                 }`}
+                aria-label={`Go to slide ${index + 1}`}
               />
             ))}
           </div>
         </section>
 
         {/* Jadwal Sholat */}
-        <section className="bg-gradient-to-br from-emerald-600 via-emerald-500 to-teal-600 py-12">
-          <div className="container mx-auto px-4">
+        <section className="bg-gradient-to-br from-emerald-600 via-emerald-500 to-teal-600 py-8 sm:py-10 md:py-12">
+          <div className="container mx-auto px-3 sm:px-4">
             <div className="max-w-6xl mx-auto">
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden">
-                <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-6">
-                  <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-xl sm:shadow-2xl overflow-hidden">
+                <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-4 sm:p-5 md:p-6">
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 sm:gap-4">
+                    {/* Judul dan Tanggal */}
                     <div className="text-white">
-                      <h3 className="text-2xl font-bold mb-1">Jadwal Shalat</h3>
-                      <p className="text-emerald-100 text-sm">
+                      <h3 className="text-xl sm:text-2xl font-bold mb-1">
+                        Jadwal Shalat
+                      </h3>
+                      <p className="text-emerald-100 text-xs sm:text-sm">
                         {currentTime.toLocaleDateString("id-ID", {
                           weekday: "long",
                           year: "numeric",
@@ -335,26 +344,30 @@ const MasjidNurulHuda = () => {
                       </p>
                     </div>
 
-                    <div className="flex gap-3 items-center">
-                      <div className="relative">
+                    {/* Dropdown City + Refresh */}
+                    <div className="flex gap-2 sm:gap-3 items-center w-full md:w-auto">
+                      {/* Dropdown City */}
+                      <div className="relative flex-1">
                         <button
                           onClick={() => setShowCityDropdown(!showCityDropdown)}
-                          className="bg-white text-gray-800 px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all flex items-center gap-2 min-w-[180px] justify-between"
+                          className="bg-white text-gray-800 px-4 py-2.5 sm:px-5 sm:py-3 rounded-lg sm:rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all flex items-center justify-between w-full"
                         >
                           <div className="flex items-center gap-2">
-                            <MapPin size={18} className="text-emerald-600" />
-                            <span>{selectedCity.name}</span>
+                            <MapPin size={16} className="text-emerald-600" />
+                            <span className="text-sm sm:text-base truncate">
+                              {selectedCity.name}
+                            </span>
                           </div>
                           <ChevronDown
-                            size={18}
-                            className={`transition-transform ${
+                            size={16}
+                            className={`transition-transform flex-shrink-0 ${
                               showCityDropdown ? "rotate-180" : ""
                             }`}
                           />
                         </button>
 
                         {showCityDropdown && (
-                          <div className="absolute top-full mt-2 w-full bg-white rounded-xl shadow-2xl overflow-hidden z-10 max-h-64 overflow-y-auto">
+                          <div className="absolute top-full mt-1 sm:mt-2 w-full bg-white rounded-lg sm:rounded-xl shadow-2xl overflow-hidden z-10 max-h-48 overflow-y-auto">
                             {cities.map((city) => (
                               <button
                                 key={city.id}
@@ -362,7 +375,7 @@ const MasjidNurulHuda = () => {
                                   setSelectedCity(city);
                                   setShowCityDropdown(false);
                                 }}
-                                className={`w-full text-left px-4 py-3 hover:bg-emerald-50 transition-colors ${
+                                className={`w-full text-left px-3 sm:px-4 py-2.5 sm:py-3 hover:bg-emerald-50 transition-colors text-sm sm:text-base ${
                                   selectedCity.id === city.id
                                     ? "bg-emerald-100 text-emerald-700 font-semibold"
                                     : "text-gray-700"
@@ -375,32 +388,33 @@ const MasjidNurulHuda = () => {
                         )}
                       </div>
 
+                      {/* Refresh Button */}
                       <button
                         onClick={fetchPrayerTimes}
                         disabled={loading}
-                        className="bg-white text-emerald-600 p-3 rounded-xl shadow-lg hover:shadow-xl transition-all hover:rotate-180 duration-500 disabled:opacity-50"
+                        className="bg-white text-emerald-600 p-2.5 sm:p-3 rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all hover:rotate-180 duration-500 disabled:opacity-50 w-12 h-12 flex items-center justify-center flex-shrink-0"
                         title="Refresh"
+                        aria-label="Refresh jadwal sholat"
                       >
                         <RefreshCw
-                          size={20}
+                          size={18}
                           className={loading ? "animate-spin" : ""}
                         />
                       </button>
                     </div>
                   </div>
+
+                  {/* Countdown Timer */}
                   {!loading && jadwalSholat.length > 0 && nextSholatInfo && (
-                    <p className="text-white text-sm mt-1">
+                    <p className="text-white text-xs sm:text-sm mt-2">
                       {(() => {
                         const { nama, hours, minutes, seconds } =
                           nextSholatInfo;
                         let timeString = `Menuju ${nama} `;
 
-                        if (hours > 0) {
-                          timeString += `${hours} jam `;
-                        }
-                        if (minutes > 0 || hours > 0) {
+                        if (hours > 0) timeString += `${hours} jam `;
+                        if (minutes > 0 || hours > 0)
                           timeString += `${minutes} menit `;
-                        }
                         timeString += `${seconds} detik lagi`;
 
                         return timeString;
@@ -409,28 +423,28 @@ const MasjidNurulHuda = () => {
                   )}
                 </div>
 
-                <div className="p-8">
+                <div className="p-4 sm:p-6 md:p-8">
                   {loading ? (
-                    <div className="flex justify-center items-center py-12">
-                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+                    <div className="flex justify-center items-center py-8 sm:py-12">
+                      <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-emerald-600"></div>
                     </div>
                   ) : (
                     <>
                       {error && (
-                        <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm text-center">
+                        <div className="mb-3 sm:mb-4 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-xs sm:text-sm text-center">
                           {error}
                         </div>
                       )}
-                      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3 md:gap-4">
                         {jadwalSholat.map((sholat, idx) => (
                           <div
                             key={idx}
-                            className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-6 text-center hover:shadow-lg transition-all hover:scale-105 border border-emerald-100"
+                            className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 text-center hover:shadow-lg transition-all hover:scale-105 border border-emerald-100"
                           >
-                            <div className="text-2xl font-semibold text-gray-600 mb-2">
+                            <div className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-600 mb-1 sm:mb-2">
                               {sholat.nama}
                             </div>
-                            <div className="text-2xl font-bold text-emerald-600">
+                            <div className="text-lg sm:text-xl md:text-2xl font-bold text-emerald-600">
                               {sholat.waktu}
                             </div>
                           </div>
@@ -441,7 +455,7 @@ const MasjidNurulHuda = () => {
                 </div>
               </div>
 
-              <div className="text-center mt-4 text-white/90 text-sm">
+              <div className="text-center mt-3 sm:mt-4 text-white/90 text-xs sm:text-sm">
                 <p>
                   Waktu shalat untuk wilayah {selectedCity.name} dan sekitarnya
                 </p>
@@ -451,39 +465,45 @@ const MasjidNurulHuda = () => {
         </section>
 
         {/* Berita Terbaru */}
-        <section id="berita" className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-gray-900 mb-2">
+        <section id="berita" className="py-10 sm:py-12 md:py-16 bg-white">
+          <div className="container mx-auto px-3 sm:px-4">
+            <div className="text-center mb-8 sm:mb-10 md:mb-12">
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
                 Berita Terbaru
               </h3>
-              <p className="text-gray-600">Berita terkini hanya untuk Anda</p>
+              <p className="text-gray-600 text-sm sm:text-base">
+                Berita terkini hanya untuk Anda
+              </p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
               {beritaTerbaru.map((berita, idx) => (
                 <div
                   key={idx}
-                  className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1"
+                  className="bg-white rounded-lg sm:rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1"
                 >
                   <div className="overflow-hidden">
                     <img
                       src={berita.image}
                       alt={berita.judul}
-                      className="w-full h-48 object-cover hover:scale-110 transition-transform duration-500"
+                      className="w-full h-40 sm:h-48 object-cover hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
                     />
                   </div>
-                  <div className="p-6">
-                    <h5 className="text-lg font-bold text-gray-900 mb-3 hover:text-emerald-600 transition">
+                  <div className="p-4 sm:p-5 md:p-6">
+                    <h5 className="text-base sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 hover:text-emerald-600 transition line-clamp-2">
                       {berita.judul}
                     </h5>
-                    <div className="flex items-center text-gray-500 text-sm mb-3">
-                      <Calendar size={14} className="mr-2" />
-                      {berita.tanggal}
+                    <div className="flex items-center text-gray-500 text-xs sm:text-sm mb-2 sm:mb-3">
+                      <Calendar
+                        size={12}
+                        className="mr-1 sm:mr-2 flex-shrink-0"
+                      />
+                      <span className="truncate">{berita.tanggal}</span>
                     </div>
-                    <p className="text-gray-600 text-sm mb-4">
+                    <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-3">
                       {berita.excerpt}
                     </p>
-                    <button className="text-emerald-600 font-semibold hover:text-emerald-700 transition">
+                    <button className="text-emerald-600 font-semibold hover:text-emerald-700 transition text-sm sm:text-base">
                       Baca Selengkapnya →
                     </button>
                   </div>
@@ -494,29 +514,29 @@ const MasjidNurulHuda = () => {
         </section>
 
         {/* Tausiyah & Galeri */}
-        <section id="galeri" className="py-16 bg-emerald-600">
-          <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-3 gap-8">
+        <section id="galeri" className="py-10 sm:py-12 md:py-16 bg-emerald-600">
+          <div className="container mx-auto px-3 sm:px-4">
+            <div className="grid lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8">
               <div className="lg:col-span-2">
-                <h3 className="text-3xl font-bold text-white mb-6">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-5 md:mb-6">
                   Tausiyah Terbaru
                 </h3>
                 <div className="bg-gray-900 rounded-lg aspect-video overflow-hidden">
                   <iframe
                     className="w-full h-full"
-                    src="https://youtube.com/embed/voc5Yp1QT8Q?feature=share"
+                    src="https://www.youtube.com/embed/voc5Yp1QT8Q"
                     title="Tausiyah Terbaru"
-                    frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
-                  ></iframe>
+                    loading="lazy"
+                  />
                 </div>
               </div>
               <div>
-                <h3 className="text-3xl font-bold text-white mb-6">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-5 md:mb-6">
                   Galeri Terbaru
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {galeriTerbaru.map((galeri, idx) => (
                     <div
                       key={idx}
@@ -526,14 +546,15 @@ const MasjidNurulHuda = () => {
                         <img
                           src={galeri.image}
                           alt={galeri.judul}
-                          className="w-full h-32 object-cover hover:scale-110 transition-transform duration-500"
+                          className="w-full h-28 sm:h-32 object-cover hover:scale-110 transition-transform duration-500"
+                          loading="lazy"
                         />
                       </div>
-                      <div className="p-4">
+                      <div className="p-3 sm:p-4">
                         <div className="text-xs text-gray-500">
                           {galeri.tanggal}
                         </div>
-                        <h5 className="text-gray-900 font-bold mt-1">
+                        <h5 className="text-gray-900 font-bold mt-1 text-sm sm:text-base">
                           {galeri.judul}
                         </h5>
                       </div>
@@ -546,30 +567,34 @@ const MasjidNurulHuda = () => {
         </section>
 
         {/* Dewan Pengurus */}
-        <section id="pengurus" className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-gray-900">
+        <section id="pengurus" className="py-10 sm:py-12 md:py-16 bg-white">
+          <div className="container mx-auto px-3 sm:px-4">
+            <div className="text-center mb-8 sm:mb-10 md:mb-12">
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">
                 Dewan Pengurus Masjid
               </h3>
             </div>
-            <div className="bg-emerald-600 rounded-2xl p-8">
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="bg-emerald-600 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 mb-6 sm:mb-8">
                 {pengurus.map((person, idx) => (
                   <div
                     key={idx}
-                    className="bg-white rounded-lg p-6 text-center shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
+                    className="bg-white rounded-lg p-4 sm:p-5 md:p-6 text-center shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
                   >
-                    <div className="w-full aspect-square bg-emerald-100 rounded-lg mb-4 flex items-center justify-center text-emerald-600 text-4xl font-bold hover:bg-emerald-200 transition">
+                    <div className="w-full aspect-square bg-emerald-100 rounded-lg mb-3 sm:mb-4 flex items-center justify-center text-emerald-600 text-2xl sm:text-3xl md:text-4xl font-bold hover:bg-emerald-200 transition">
                       {person.nama.charAt(0)}
                     </div>
-                    <h6 className="text-gray-900 font-bold">{person.nama}</h6>
-                    <p className="text-gray-600 text-sm">{person.jabatan}</p>
+                    <h6 className="text-gray-900 font-bold text-sm sm:text-base md:text-lg">
+                      {person.nama}
+                    </h6>
+                    <p className="text-gray-600 text-xs sm:text-sm mt-1">
+                      {person.jabatan}
+                    </p>
                   </div>
                 ))}
               </div>
               <div className="text-center">
-                <button className="bg-white text-emerald-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition shadow-md hover:shadow-lg">
+                <button className="bg-white text-emerald-600 px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-gray-100 transition shadow-md hover:shadow-lg text-sm sm:text-base">
                   Pengurus Lainnya
                 </button>
               </div>
@@ -578,49 +603,59 @@ const MasjidNurulHuda = () => {
         </section>
 
         {/* Kontak */}
-        <section id="kontak" className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-gray-900">Hubungi Kami</h3>
+        <section id="kontak" className="py-10 sm:py-12 md:py-16 bg-gray-50">
+          <div className="container mx-auto px-3 sm:px-4">
+            <div className="text-center mb-8 sm:mb-10 md:mb-12">
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                Hubungi Kami
+              </h3>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-8 max-w-5xl mx-auto">
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <MapPin className="text-emerald-600" size={24} />
+            <div className="bg-white rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-6 md:p-8 max-w-5xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <MapPin className="text-emerald-600" size={20} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-gray-900 mb-2">Alamat</h4>
-                      <p className="text-gray-600">
+                      <h4 className="font-bold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">
+                        Alamat
+                      </h4>
+                      <p className="text-gray-600 text-xs sm:text-sm">
                         Jalan Cisokan Raya, RW 014, Abadijaya, Sukmajaya
                         <br />
                         Kota Depok, Jawa Barat, 16417
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Phone className="text-emerald-600" size={24} />
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Phone className="text-emerald-600" size={20} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-gray-900 mb-2">Telepon</h4>
-                      <p className="text-gray-600">+62 818-0886-1551</p>
+                      <h4 className="font-bold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">
+                        Telepon
+                      </h4>
+                      <p className="text-gray-600 text-xs sm:text-sm">
+                        +62 818-0886-1551
+                      </p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Mail className="text-emerald-600" size={24} />
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Mail className="text-emerald-600" size={20} />
                     </div>
                     <div>
-                      <h4 className="font-bold text-gray-900 mb-2">Email</h4>
-                      <p className="text-gray-600">
+                      <h4 className="font-bold text-gray-900 mb-1 sm:mb-2 text-sm sm:text-base">
+                        Email
+                      </h4>
+                      <p className="text-gray-600 text-xs sm:text-sm break-all">
                         masjidnurulhudadepok14@gmail.com
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="rounded-lg overflow-hidden h-64 w-full">
+                <div className="rounded-lg overflow-hidden h-48 sm:h-56 md:h-64 w-full">
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4734.289410183863!2d106.853067!3d-6.389931!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69eb8ff890ae59%3A0xb1f728b148a565b0!2sMasjid%20Jami&#39;%20Nurul%20Huda!5e1!3m2!1sid!2sid!4v1767355239422!5m2!1sid!2sid"
                     width="100%"
@@ -629,7 +664,8 @@ const MasjidNurulHuda = () => {
                     allowFullScreen=""
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                  ></iframe>
+                    title="Lokasi Masjid Nurul Huda"
+                  />
                 </div>
               </div>
             </div>
@@ -637,22 +673,26 @@ const MasjidNurulHuda = () => {
         </section>
 
         {/* Footer */}
-        <footer className="bg-gray-900 text-white py-12">
-          <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-4 gap-8 mb-8">
+        <footer className="bg-gray-900 text-white py-8 sm:py-10 md:py-12">
+          <div className="container mx-auto px-3 sm:px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
               <div>
-                <h5 className="text-xl font-bold mb-4">Masjid Nurul Huda</h5>
-                <p className="text-gray-400 text-sm">
+                <h5 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">
+                  Masjid Nurul Huda
+                </h5>
+                <p className="text-gray-400 text-xs sm:text-sm">
                   ABADIJAYA, SUKMAJAYA, KOTA DEPOK, JAWA BARAT
                 </p>
               </div>
               <div>
-                <h5 className="font-bold mb-4">Link Cepat</h5>
-                <ul className="space-y-2 text-sm">
+                <h5 className="font-bold mb-3 sm:mb-4 text-sm sm:text-base">
+                  Link Cepat
+                </h5>
+                <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
                   <li>
                     <a
                       href="#"
-                      className="text-gray-400 hover:text-white transition"
+                      className="text-gray-400 hover:text-white transition block py-1"
                     >
                       Profile
                     </a>
@@ -660,7 +700,7 @@ const MasjidNurulHuda = () => {
                   <li>
                     <a
                       href="#"
-                      className="text-gray-400 hover:text-white transition"
+                      className="text-gray-400 hover:text-white transition block py-1"
                     >
                       Dewan Pengurus
                     </a>
@@ -668,7 +708,7 @@ const MasjidNurulHuda = () => {
                   <li>
                     <a
                       href="#"
-                      className="text-gray-400 hover:text-white transition"
+                      className="text-gray-400 hover:text-white transition block py-1"
                     >
                       Jadwal Jumat
                     </a>
@@ -676,12 +716,14 @@ const MasjidNurulHuda = () => {
                 </ul>
               </div>
               <div>
-                <h5 className="font-bold mb-4">Informasi</h5>
-                <ul className="space-y-2 text-sm">
+                <h5 className="font-bold mb-3 sm:mb-4 text-sm sm:text-base">
+                  Informasi
+                </h5>
+                <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
                   <li>
                     <a
                       href="#"
-                      className="text-gray-400 hover:text-white transition"
+                      className="text-gray-400 hover:text-white transition block py-1"
                     >
                       Tausiyah
                     </a>
@@ -689,7 +731,7 @@ const MasjidNurulHuda = () => {
                   <li>
                     <a
                       href="#"
-                      className="text-gray-400 hover:text-white transition"
+                      className="text-gray-400 hover:text-white transition block py-1"
                     >
                       Berita
                     </a>
@@ -697,7 +739,7 @@ const MasjidNurulHuda = () => {
                   <li>
                     <a
                       href="#"
-                      className="text-gray-400 hover:text-white transition"
+                      className="text-gray-400 hover:text-white transition block py-1"
                     >
                       Galeri
                     </a>
@@ -705,33 +747,41 @@ const MasjidNurulHuda = () => {
                 </ul>
               </div>
               <div>
-                <h5 className="font-bold mb-4">Ikuti Kami</h5>
-                <div className="flex gap-4">
+                <h5 className="font-bold mb-3 sm:mb-4 text-sm sm:text-base">
+                  Ikuti Kami
+                </h5>
+                <div className="flex gap-3 sm:gap-4">
                   <a
                     href="https://www.facebook.com/profile.php?id=61581768106162"
                     target="_blank"
-                    className="text-gray-400 hover:text-white transition"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-white transition p-1"
+                    aria-label="Facebook"
                   >
-                    <Facebook size={20} />
+                    <Facebook size={18} className="sm:w-5 sm:h-5" />
                   </a>
                   <a
                     href="https://www.instagram.com/risma_nurulhuda14/"
                     target="_blank"
-                    className="text-gray-400 hover:text-white transition"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-white transition p-1"
+                    aria-label="Instagram"
                   >
-                    <Instagram size={20} />
+                    <Instagram size={18} className="sm:w-5 sm:h-5" />
                   </a>
                   <a
                     href="https://www.youtube.com/@MasjidNurulHudaDepok"
                     target="_blank"
-                    className="text-gray-400 hover:text-white transition"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-white transition p-1"
+                    aria-label="YouTube"
                   >
-                    <Youtube size={20} />
+                    <Youtube size={18} className="sm:w-5 sm:h-5" />
                   </a>
                 </div>
               </div>
             </div>
-            <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
+            <div className="border-t border-gray-800 pt-6 sm:pt-8 text-center text-gray-400 text-xs sm:text-sm">
               <p>
                 Copyright © {currentTime.getFullYear()} by{" "}
                 <a
