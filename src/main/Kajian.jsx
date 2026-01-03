@@ -47,7 +47,7 @@ const KajianRutin = () => {
     {
       id: 3,
       judul: "Kajian Subuh Bulanan",
-      pemateri: "Ust. Dr. Ahmad Syafii, M.A.",
+      pemateri: "Sesuai Jadwal Pemateri",
       hari: "Minggu Ketiga Setiap Bulan",
       waktu: "Ba'da Subuh - 05:30 WIB",
       tempat: "Aula Utama Masjid",
