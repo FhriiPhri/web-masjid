@@ -681,7 +681,8 @@ const MasjidNurulHuda = () => {
                   Masjid Nurul Huda
                 </h5>
                 <p className="text-gray-400 text-xs sm:text-sm">
-                  ABADIJAYA, SUKMAJAYA, KOTA DEPOK, JAWA BARAT
+                  Jalan Cisokan Raya, RW 014, Abadijaya, Sukmajaya, Kota Depok,
+                  Jawa Barat - 16417
                 </p>
               </div>
               <div>
