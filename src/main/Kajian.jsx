@@ -428,7 +428,8 @@ const KajianRutin = () => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="/#kontak"
+                  href="https://maps.app.goo.gl/LVAvN6sXprFCSoLY6"
+                  target="_blank"
                   className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-emerald-700 hover:to-teal-700 transition shadow-lg hover:shadow-xl inline-flex items-center justify-center gap-2"
                 >
                   <MapPin size={18} />

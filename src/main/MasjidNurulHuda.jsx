@@ -184,10 +184,10 @@ const MasjidNurulHuda = () => {
   ];
 
   const pengurus = [
-    { nama: "Basuki Achmad", jabatan: "Ketua DKM" },
-    { nama: "Sulaiman Rasyid", jabatan: "Wakil Ketua DKM" },
-    { nama: "Salahuddin", jabatan: "Bendahara" },
-    { nama: "Maryam", jabatan: "Sekretaris" },
+    { nama: "BASUKI ACHMAD", jabatan: "Ketua DKM" },
+    { nama: "SYAHRIAL ARIFIN", jabatan: "Wakil Ketua DKM" },
+    { nama: "HADI SUTOMO", jabatan: "Bendahara" },
+    { nama: "WIHARTO", jabatan: "Sekretaris" },
   ];
 
   const scrollToSection = (section) => {
@@ -519,7 +519,7 @@ const MasjidNurulHuda = () => {
             <div className="grid lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8">
               <div className="lg:col-span-2">
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-5 md:mb-6">
-                  Tausiyah Terbaru
+                  Live Terbaru
                 </h3>
                 <div className="bg-gray-900 rounded-lg aspect-video overflow-hidden">
                   <iframe
@@ -594,7 +594,10 @@ const MasjidNurulHuda = () => {
                 ))}
               </div>
               <div className="text-center">
-                <button className="bg-white text-emerald-600 px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-gray-100 transition shadow-md hover:shadow-lg text-sm sm:text-base">
+                <button
+                  onClick={() => (window.location.href = "/pengurus")}
+                  className="bg-white text-emerald-600 px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-gray-100 transition shadow-md hover:shadow-lg text-sm sm:text-base"
+                >
                   Pengurus Lainnya
                 </button>
               </div>

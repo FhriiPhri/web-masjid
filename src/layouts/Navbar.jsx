@@ -22,7 +22,7 @@ const Navbar = ({ scrollToSection }) => {
     { name: "kajian", type: "route", path: "/kajian" },
     { name: "galeri", type: "route", path: "/gallery" },
     { name: "pengurus", type: "route", path: "/pengurus" },
-    { name: "kontak", type: "scroll" },
+    { name: "kontak", type: "route", path: "/kontak" },
   ];
 
   return (
